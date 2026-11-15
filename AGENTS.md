@@ -29,6 +29,7 @@ npm run build                   # → dist/ (the deployed artefact)
 - Tailwind via `@tailwindcss/postcss`; `@source` for tds-shared after the `@import`s; fonts as JS imports.
 - A new form must call `signalTyping()`.
 - tds-shared is a minor-locked 0.x caret: validate a repin from a fresh install.
+- Follows the TDS quality standard (`../tds-ops/standards/quality.md`): no AI slop, clean code.
 
 ## Topic files
 
