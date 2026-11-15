@@ -102,7 +102,7 @@ function SignUp() {
       <div className="auth-form">
         <p className="status-pill status-pill--success" role="status">
           Fast geschafft: Eine E-Mail mit einem Bestätigungslink ist unterwegs. Der Link gilt 24 Stunden. Besteht zu der
-          Adresse schon ein Konto, kommt keine Mail — dann hilft „Passwort vergessen“.
+          Adresse schon ein Konto, kommt keine Mail, dann hilft „Passwort vergessen“.
         </p>
         <a className="btn btn-ghost" href="/">
           Zur Anmeldung

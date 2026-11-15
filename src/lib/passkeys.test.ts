@@ -29,7 +29,7 @@ describe("network failures", () => {
     await expect(loginWithPasskey()).resolves.toEqual({ ok: false, reason: "failed" });
   });
 
-  it("listing says `failed`, not `signed-out` — a hiccup must not log the user out", async () => {
+  it("listing says `failed`, not `signed-out`, a hiccup must not log the user out", async () => {
     offline();
     await expect(listPasskeys()).resolves.toBe("failed");
   });

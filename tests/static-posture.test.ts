@@ -97,7 +97,7 @@ describe("noindex posture (private surface)", () => {
 });
 
 describe("build configuration", () => {
-  it("stays a static site (no SSR — there is no Node on prod)", () => {
+  it("stays a static site (no SSR, there is no Node on prod)", () => {
     expect(astroConfig).toMatch(/output:\s*"static"/);
     expect(astroConfig).not.toMatch(/output:\s*"server"/);
   });
@@ -370,7 +370,7 @@ describe("login chrome", () => {
     );
     expect(
       themeBootstrapScript,
-      "re-applies on a client-side navigation — the half the local copy lacked",
+      "re-applies on a client-side navigation, the half the local copy lacked",
     ).toContain("astro:before-swap");
   });
 });
