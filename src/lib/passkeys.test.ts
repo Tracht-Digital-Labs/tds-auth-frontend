@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { primeRuntimeConfig, resetRuntimeConfig } from "@tracht-digital-solutions/tds-shared/api";
+import { primeRuntimeConfig, resetRuntimeConfig } from "@tracht-digital-labs/tds-shared/api";
 import { deletePasskey, listPasskeys, loginWithPasskey } from "~/lib/passkeys";
 
 /**

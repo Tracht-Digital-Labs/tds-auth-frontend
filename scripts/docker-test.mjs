@@ -37,7 +37,7 @@ function resolveToken() {
     [
       "No GitHub Packages token found.",
       "",
-      "@tracht-digital-solutions/* installs from GitHub Packages, so the container",
+      "@tracht-digital-labs/* installs from GitHub Packages, so the container",
       "needs a classic PAT with read:packages (SSO-authorized for the org).",
       "",
       "Set it for this run:",

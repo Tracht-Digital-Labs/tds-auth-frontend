@@ -13,7 +13,7 @@
  * `tds-runtime.json` beside `index.html`, and {@link authBase} prefers it.
  */
 
-import { runtimeAbsolute } from "@tracht-digital-solutions/tds-shared/api";
+import { runtimeAbsolute } from "@tracht-digital-labs/tds-shared/api";
 
 /**
  * The build-time fallback, inlined by Vite.

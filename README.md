@@ -14,7 +14,7 @@ logs them in and sends them back (the `next` value is validated against a
 
 ## Setup
 
-`@tracht-digital-solutions/*` packages live on **GitHub Packages**, so `npm install` needs
+`@tracht-digital-labs/*` packages live on **GitHub Packages**, so `npm install` needs
 a classic PAT with `read:packages` (SSO-authorized for the org), provided via `~/.npmrc` or
 the `NPM_TOKEN` env var the repo `.npmrc` references. `GITHUB_TOKEN` can't read
 `tds-shared-pkg` cross-repo.

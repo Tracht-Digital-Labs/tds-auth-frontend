@@ -31,7 +31,7 @@ vi.mock("~/lib/auth", () => ({ fetchMe, login }));
 
 // The shared Spinner is a presentational island from tds-shared-pkg; stub it so
 // the tests don't depend on that package's markup.
-vi.mock("@tracht-digital-solutions/tds-shared/components", () => ({
+vi.mock("@tracht-digital-labs/tds-shared/components", () => ({
   Spinner: ({ size }: { size?: string }) => <span data-testid="spinner" data-size={size} />,
 }));
 

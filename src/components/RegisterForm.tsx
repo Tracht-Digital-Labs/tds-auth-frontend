@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Spinner } from "@tracht-digital-solutions/tds-shared/components";
+import { Spinner } from "@tracht-digital-labs/tds-shared/components";
 import { confirmRegistration, register } from "~/lib/auth";
 import { signalTyping } from "~/lib/artworkSignal";
 import { safeNext } from "~/lib/redirect";

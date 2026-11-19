@@ -23,7 +23,7 @@ const { register, confirmRegistration } = vi.hoisted(() => ({
 
 vi.mock("~/lib/auth", () => ({ register, confirmRegistration }));
 
-vi.mock("@tracht-digital-solutions/tds-shared/components", () => ({
+vi.mock("@tracht-digital-labs/tds-shared/components", () => ({
   Spinner: ({ size }: { size?: string }) => <span data-testid="spinner" data-size={size} />,
 }));
 

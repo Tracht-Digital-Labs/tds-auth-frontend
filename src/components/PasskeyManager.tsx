@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ConfirmDialog, Spinner } from "@tracht-digital-solutions/tds-shared/components";
+import { ConfirmDialog, Spinner } from "@tracht-digital-labs/tds-shared/components";
 import { fetchMe } from "~/lib/auth";
 import { signalTyping } from "~/lib/artworkSignal";
 import {

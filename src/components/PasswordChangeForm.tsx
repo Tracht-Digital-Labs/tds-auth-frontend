@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Spinner } from "@tracht-digital-solutions/tds-shared/components";
+import { Spinner } from "@tracht-digital-labs/tds-shared/components";
 import { changePassword, fetchMe, type Me } from "~/lib/auth";
 import { signalTyping } from "~/lib/artworkSignal";
 import { resolveTarget } from "~/lib/redirect";

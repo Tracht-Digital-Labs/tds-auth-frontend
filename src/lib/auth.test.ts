@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   primeRuntimeConfig,
   resetRuntimeConfig,
-} from "@tracht-digital-solutions/tds-shared/api";
+} from "@tracht-digital-labs/tds-shared/api";
 import { AUTH_API_URL, changePassword, fetchMe, login, type Me } from "~/lib/auth";
 
 /**

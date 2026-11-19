@@ -344,7 +344,7 @@ describe("login chrome", () => {
      * package own the body. The body is checked against the package below, so a
      * regression in tds-shared fails here too.
      */
-    expect(layout).toMatch(/import \{[^}]*\bthemeBootstrapScript\b[^}]*\} from "@tracht-digital-solutions\/tds-shared\/astro"/);
+    expect(layout).toMatch(/import \{[^}]*\bthemeBootstrapScript\b[^}]*\} from "@tracht-digital-labs\/tds-shared\/astro"/);
     expect(layout).toMatch(/<script is:inline set:html=\{themeBootstrapScript\} \/>/);
     expect(layout, "no second, hand-written copy").not.toContain('localStorage.getItem("tds-theme")');
 
@@ -362,7 +362,7 @@ describe("login chrome", () => {
      * is only visible after evaluation. This is the exact text the layout inlines.
      */
     const { themeBootstrapScript } = await import(
-      "@tracht-digital-solutions/tds-shared/astro"
+      "@tracht-digital-labs/tds-shared/astro"
     );
     expect(themeBootstrapScript).toContain('localStorage.getItem("tds-theme")');
     expect(themeBootstrapScript, "reads the OS preference when nothing is stored").toContain(

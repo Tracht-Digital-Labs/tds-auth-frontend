@@ -22,7 +22,7 @@ const { requestPasswordReset, confirmPasswordReset } = vi.hoisted(() => ({
 
 vi.mock("~/lib/auth", () => ({ requestPasswordReset, confirmPasswordReset }));
 
-vi.mock("@tracht-digital-solutions/tds-shared/components", () => ({
+vi.mock("@tracht-digital-labs/tds-shared/components", () => ({
   Spinner: ({ size }: { size?: string }) => <span data-testid="spinner" data-size={size} />,
 }));
 

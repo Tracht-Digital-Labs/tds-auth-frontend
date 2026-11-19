@@ -13,11 +13,11 @@
    inlines CSS @imports without rebasing the packages' relative
    url(./files/*.woff2) refs, so Vite would never emit the woff2 and every font
    404s. */
-@import "@tracht-digital-solutions/tds-shared/styles/base.css";
-@import "@tracht-digital-solutions/tds-shared/styles/app.css";
+@import "@tracht-digital-labs/tds-shared/styles/base.css";
+@import "@tracht-digital-labs/tds-shared/styles/app.css";
 /* Cross-page fade between the sign-in, password and passkey pages — no
    script, opacity only, off under reduced motion. */
-@import "@tracht-digital-solutions/tds-shared/styles/page-transitions.css";
+@import "@tracht-digital-labs/tds-shared/styles/page-transitions.css";
 /* The geometry tokens for the operator shell (`Layout variant="plain"`).
    This site is a hand-styled login and never declared a surface, so the
    shared page primitives (.tds-shell, .tds-card, .tds-page__*) had no
@@ -28,7 +28,7 @@
    so one can nest inside another. Importing this therefore leaves the login
    page untouched: it writes no `data-surface`, so none of these tokens
    apply to it. */
-@import "@tracht-digital-solutions/tds-shared/styles/surfaces/panel.css";
+@import "@tracht-digital-labs/tds-shared/styles/surfaces/panel.css";
 
 /* Tailwind ignores node_modules by default, and the shared React islands are
    built out of utility classes (`ThemeToggle` is `inline-flex w-9 h-9
@@ -36,7 +36,7 @@
    toggle renders as two raw stacked SVGs — which is exactly how it shipped: no
    error, no warning, just an unstyled control in the corner.
    MUST come after the @imports; `@source` before an `@import` is an error. */
-@source "../../node_modules/@tracht-digital-solutions/tds-shared";
+@source "../../node_modules/@tracht-digital-labs/tds-shared";
 
 /* REMOVED, do not reintroduce: a local `:root` block re-declaring
    `--font-display` and `--font-body`. base.css already declares both — Lato

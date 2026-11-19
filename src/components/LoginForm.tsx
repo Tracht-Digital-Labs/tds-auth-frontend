@@ -1,7 +1,7 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { flushSync } from "react-dom";
-import { transitionUpdate } from "@tracht-digital-solutions/tds-shared/motion";
-import { Spinner } from "@tracht-digital-solutions/tds-shared/components";
+import { transitionUpdate } from "@tracht-digital-labs/tds-shared/motion";
+import { Spinner } from "@tracht-digital-labs/tds-shared/components";
 import { fetchMe, login } from "~/lib/auth";
 import { signalTyping } from "~/lib/artworkSignal";
 import { loginWithPasskey, passkeysSupported } from "~/lib/passkeys";

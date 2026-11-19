@@ -1,4 +1,4 @@
-import { LEGAL_LINKS } from "@tracht-digital-solutions/tds-shared/nav";
+import { LEGAL_LINKS } from "@tracht-digital-labs/tds-shared/nav";
 
 /** Site-wide metadata for the central login. */
 export const site = {

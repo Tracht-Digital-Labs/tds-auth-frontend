@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Spinner } from "@tracht-digital-solutions/tds-shared/components";
+import { Spinner } from "@tracht-digital-labs/tds-shared/components";
 import { confirmPasswordReset, requestPasswordReset } from "~/lib/auth";
 import { signalTyping } from "~/lib/artworkSignal";
 import { ErrorPill, Field, useFormError } from "~/components/formError";
