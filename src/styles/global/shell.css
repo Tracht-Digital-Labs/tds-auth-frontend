@@ -1,0 +1,48 @@
+/* ============================================================================
+   Central-login chrome (site-local)
+
+   A split shell: form left, freshly generated artwork right. It replaces a
+   frosted card floating over an animated aurora — two competing focal points,
+   with the form never actually winning. Giving the artwork its own half lets
+   the form sit plainly on the page, which is both calmer and easier to read.
+
+   DOM order is form-then-artwork so the keyboard reaches the fields first;
+   below the split breakpoint, grid rows lift the artwork above it visually
+   without touching that order.
+   ========================================================================= */
+
+.auth-page {
+  min-height: 100dvh;
+  display: grid;
+  /* Narrow: a slim artwork band, then the form. */
+  grid-template-rows: clamp(7rem, 22vh, 11rem) 1fr;
+  grid-template-columns: 1fr;
+  background: var(--color-paper);
+}
+
+.auth-panel {
+  grid-row: 2;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.auth-panel__inner {
+  width: 100%;
+  max-width: 24rem;
+}
+
+.auth-art {
+  grid-row: 1;
+  position: relative;
+  overflow: hidden;
+  /* The panel paints itself before the island has generated anything, so the
+     first frame is a brand surface rather than a hole. Deliberately a FIXED
+     dark field in both themes (the surface-* tokens don't flip): it is the
+     contrast partner to the form half, and a light artwork panel beside a
+     light form would flatten the whole split.
+
+     FLAT, like every other surface since the "Digitale Maßarbeit" pass: the
+     depth comes from the composition's hard shadows, not from a gradient. */
+  background: var(--color-surface-navy);
+}

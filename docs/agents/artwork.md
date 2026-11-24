@@ -1,7 +1,19 @@
 # Generated login artwork
 
 `src/lib/artwork.ts` (generator) + `src/components/LoginArtwork.tsx` (renderer) + the
-`.auth-art*` rules in `global.css`.
+`.auth-art*` rules in `src/styles/global/artwork.css` and `artwork-motion.css`.
+
+`artwork.ts` holds `generateArtwork` and is the only import path; its parts live under
+`src/lib/artwork/`:
+
+| Module | Holds |
+|---|---|
+| `model.ts` | The types (`Mark`, `Motion`, `Keystroke` …) and the bands (`PALETTE`, `POSE_BANDS`, `MARKS_MAX` …) |
+| `random.ts`, `context.ts` | The seeded stream (`mulberry32`, `shuffle`) and the `Ctx` every builder draws from |
+| `geometry.ts` | Path writers and placement (`place`, `Pen`, `capsulePath`, `spanHalf`) |
+| `motion.ts` | Motion, pose and entrance builders and the shared mark `base` |
+| `marks.ts` | The shapes: fields, slabs, tiles, rings, arcs, dots, crosses, rules |
+| `scenes/<scene>.ts` | One file per entry of `SCENES` |
 
 ## Generated per visit, client-side only
 

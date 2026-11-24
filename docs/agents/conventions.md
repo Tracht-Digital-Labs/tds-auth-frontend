@@ -11,6 +11,14 @@
   Tailwind utilities, and Tailwind ignores `node_modules` by default; the theme toggle once shipped as
   two raw stacked SVGs. The `@source` line must sit **after** the `@import`s (before is a build error).
 
+## global.css
+
+`src/styles/global.css` holds only imports: Tailwind and tds-shared, then the site's partials under
+`src/styles/global/` in cascade order, then `@source`. A new rule goes into the partial for its part
+of the page. `tests/stylesheets.test.ts` fails on a partial that isn't imported exactly once; tests
+that assert on the CSS read it through `readStylesheet("global")` (`tests/stylesheet.ts`), which
+inlines the partials.
+
 ## Build
 
 - **Tailwind v4 via `@tailwindcss/postcss`** (`postcss.config.mjs`), never the Vite plugin. Deleting

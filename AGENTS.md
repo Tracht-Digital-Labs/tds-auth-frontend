@@ -37,7 +37,7 @@ npm run build                   # → dist/ (the deployed artefact)
 |---|---|
 | [docs/agents/architecture.md](docs/agents/architecture.md) | Changing login flows, SSO, redirects, passwords, passkeys or the API client |
 | [docs/agents/login-ui.md](docs/agents/login-ui.md) | Changing the login layout, form controls or page motion |
-| [docs/agents/artwork.md](docs/agents/artwork.md) | Touching `artwork.ts`, `LoginArtwork.tsx`, the artwork CSS or the typing signal |
+| [docs/agents/artwork.md](docs/agents/artwork.md) | Touching `artwork.ts` or `src/lib/artwork/`, `LoginArtwork.tsx`, the artwork CSS or the typing signal |
 | [docs/agents/conventions.md](docs/agents/conventions.md) | Changing styles, fonts, build config or shared imports |
 | [docs/agents/testing.md](docs/agents/testing.md) | Writing or changing tests |
 | [docs/agents/deployment.md](docs/agents/deployment.md) | Env, the `/install` wizard, workflows or deploy |

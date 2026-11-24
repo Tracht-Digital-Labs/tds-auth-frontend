@@ -1,0 +1,30 @@
+/* The island's own wrapper, filling the panel. It exists so the composition has
+   one common ancestor to inherit the typing energy and the hover lift from, and
+   so the HOVER TARGET is owned by the island rather than by the layout — every
+   interaction rule below hangs off `.auth-art__stage:hover`.
+
+   It carries `data-theme="dark"` in both page themes (see LoginArtwork.tsx), so
+   every token resolved in here is the dark twin. That is also why it must not
+   paint a background of its own: tds-shared's dark block only re-declares
+   custom properties, and the panel's navy is `.auth-art`'s. */
+.auth-art__stage {
+  position: absolute;
+  inset: 0;
+  /* Resting state for the properties several rules read. */
+  --auth-energy: 0;
+  --auth-lift: 0;
+  /* The hard shadow's ink: the darkest navy, pushed toward black so the offset
+     reads as a shadow on the navy field rather than as a second shape. */
+  --auth-shade: color-mix(in srgb, var(--color-surface-ink) 55%, #000);
+}
+
+/* No blend mode, on purpose. The aurora this replaced stacked blurred ribbons
+   under `screen` so overlaps read as light; flat constructed shapes are paper,
+   and paper overlaps by covering. Under `screen` a hard shadow — a DARK copy —
+   would also vanish entirely: screening with black is a no-op. */
+.auth-art__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}

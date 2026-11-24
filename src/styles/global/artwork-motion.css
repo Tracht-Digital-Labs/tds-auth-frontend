@@ -1,0 +1,325 @@
+/* Everything that moves lives in this block, and that placement is load-bearing.
+   tds-shared's base.css clamps `animation-duration: 0.01ms` and
+   `animation-iteration-count: 1` on `*` under `reduce`. That clamp is built for
+   entrance animations, whose end state IS the resting state. A LOOP left outside
+   this opt-in block is therefore not switched off by it — it runs once in 0.01ms
+   and FREEZES on its final keyframe. Every loop below additionally has
+   `0% == 100% ==` the static composition, so even that failure lands somewhere
+   correct.
+
+   The seeded per-shape values arrive as inline custom properties from
+   LoginArtwork.tsx. Inside `@keyframes`, a `var()` in a `transform` is
+   substituted at computed-value time and is then CONSTANT for that element — the
+   transform components interpolate, the variable does not. That is exactly what
+   lets one rule drive forty differently-moving shapes.
+
+   `will-change` is deliberately absent: it would promote every tile to its own
+   compositor layer for no measurable gain, at several MB each. */
+@media (prefers-reduced-motion: no-preference) {
+  .auth-art__canvas {
+    animation: auth-art-in var(--tds-dur-slow, 600ms) var(--tds-ease-out, ease-out) both;
+  }
+
+  /* Pivot everything on the canvas centre (50,50) — the same point the tilt
+     rotates about, so the two compose without shifting the composition
+     off-centre. Both declared explicitly rather than left to an initial value. */
+  .auth-art__sway,
+  .auth-art__pose,
+  .auth-art__m--drift,
+  .auth-art__m--orbit,
+  .auth-art__m--slide {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+  }
+
+  /* The motions that do NOT pivot on the canvas: an arc segment turns on the
+     centre of the circle it was cut from, a mosaic tile on its own centre. The
+     generator carries the pivot as `--auth-ox/oy` in user units; `fill-box`
+     would pivot an arc on its bounding box and the orrery would tumble. */
+  .auth-art__m--spin,
+  .auth-art__m--turn {
+    transform-box: view-box;
+    transform-origin: var(--auth-ox, 50px) var(--auth-oy, 50px);
+  }
+
+  .auth-art__sway {
+    animation: auth-art-sway var(--auth-sway-dur, 120s) var(--tds-ease-in-out, ease-in-out)
+      infinite;
+  }
+  .auth-art__m--drift {
+    animation: auth-art-drift var(--auth-dur, 45s) var(--tds-ease-in-out, ease-in-out)
+      var(--auth-delay, 0s) infinite;
+  }
+  /* `spin` shares the keyframes and differs only in its pivot above. */
+  .auth-art__m--orbit,
+  .auth-art__m--spin {
+    animation: auth-art-orbit var(--auth-dur, 90s) var(--tds-ease-in-out, ease-in-out)
+      var(--auth-delay, 0s) infinite;
+  }
+  .auth-art__m--turn {
+    animation: auth-art-turn var(--auth-dur, 20s) var(--tds-ease-in-out, ease-in-out)
+      var(--auth-delay, 0s) infinite;
+  }
+  .auth-art__m--slide {
+    animation: auth-art-slide var(--auth-dur, 40s) var(--tds-ease-in-out, ease-in-out)
+      var(--auth-delay, 0s) infinite;
+  }
+  .auth-art__m--pulse {
+    animation: auth-art-pulse var(--auth-dur, 10s) var(--tds-ease-in-out, ease-in-out)
+      var(--auth-delay, 0s) infinite;
+  }
+
+  /* A conduit's travelling pulse: one short dash (the path is
+     `pathLength="1"`, so 0.07 is 7 % of the run wherever it goes) that runs
+     from the edge to the node and then rests unseen for the rest of the cycle.
+     The circuit's sign of life, and the one loop that is linear: a signal that
+     eases in and out reads as being dragged. */
+  .auth-art__signal {
+    stroke-dasharray: 0.07 1;
+    animation: auth-art-signal var(--auth-sig-dur, 6s) linear var(--auth-sig-delay, 0s) infinite;
+  }
+
+  /* ---- Entrance: the composition builds itself once ----
+
+     The canvas fades in as a whole; on top of that each constructed shape
+     arrives on its own seeded delay — tiles pop from their own centre, strokes
+     are drawn along their length, spanning bands fade. A one-shot with
+     `both` fill, so the start state holds through the delay; under `reduce`
+     none of this applies and the composition is simply there. */
+  .auth-art__in--pop {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: auth-art-pop var(--tds-dur-slow, 600ms) var(--tds-ease-out, ease-out)
+      var(--auth-in, 0ms) both;
+  }
+  .auth-art__in--fade {
+    animation: auth-art-fade var(--tds-dur-slow, 600ms) var(--tds-ease-out, ease-out)
+      var(--auth-in, 0ms) both;
+  }
+  .auth-art__in--draw .auth-art__mark,
+  .auth-art__in--draw .auth-art__shade {
+    stroke-dasharray: 1 1;
+    animation: auth-art-draw 1.1s var(--tds-ease-out, ease-out) var(--auth-in, 0ms) both;
+  }
+
+  /* ---- Interaction: hover ----
+
+     The composition answers the PRESENCE of a pointer, never its position.
+     There is no coordinate anywhere in this file and no rAF loop behind it: one
+     `:hover` state change moves every mark into a seeded target pose and back.
+     A `transition` is right here because the value changes exactly twice per
+     visit — on enter and on leave.
+
+     The pose wrapper is a SEPARATE element from `.auth-art__m--*`, which is
+     already animating `transform`. One element cannot carry both — a running
+     animation beats every other declaration of the same property. */
+  .auth-art__pose {
+    transition: transform var(--tds-dur-slow, 600ms) var(--tds-ease-out, ease-out)
+      var(--auth-pdelay, 0ms);
+  }
+
+  /* Hairline structure firms up under hover. `--auth-w` carries each line's
+     resting width so the rule scales it by a FACTOR; an absolute target would
+     thin half of them out. Filled shapes and the wash answer with movement. */
+  .auth-art__mark--line {
+    transition:
+      stroke-width var(--tds-dur-slow, 600ms) var(--tds-ease-out, ease-out),
+      stroke-opacity var(--tds-dur-slow, 600ms) var(--tds-ease-out, ease-out);
+  }
+
+  /* Accents answer hover with SCALE, not opacity: theirs is already driven
+     by `auth-art-pulse` on the group above, and a running animation beats a
+     transition outright. `fill-box` grows a dot about its own centre. */
+  .auth-art__mark--accent {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    transition: transform var(--tds-dur-slow, 600ms) var(--tds-ease-out, ease-out);
+  }
+
+  /* ---- The hard shadow, answered like a button ----
+
+     A shadowed shape is a button's shape: on hover it LIFTS toward the pointer
+     (half its offset up-left, so the shadow grows by half), the same lift the
+     login's own buttons do (tds-shared, "Hard 2D shadows"). The PRESS is a
+     keystroke answer of its own (`press` in artwork.ts), fired per key on one
+     shape at a time rather than on all of them at once.
+
+     `translate`, not `transform`: this element is the motion group, already
+     animating `transform`. The individual property composes OUTSIDE it, so the
+     lift goes up-left even on a tile that is mid-turn. The shadow itself never
+     moves; only the face does. */
+  .auth-art__raise {
+    translate: calc(var(--auth-sh, 0px) * -1 * var(--auth-lift, 0))
+      calc(var(--auth-sh, 0px) * -1 * var(--auth-lift, 0));
+    transition: translate var(--tds-dur-base, 300ms) var(--tds-ease-out, ease-out);
+  }
+
+  /* Real pointing devices only. A tap on a touch screen latches `:hover` until
+     something else is tapped, so the composition would sit in its pose
+     permanently.
+
+     No `:focus-within` partner for these `:hover`s: the stage is `aria-hidden`
+     decoration with nothing focusable inside it, so it could never match. */
+  @media (hover: hover) and (pointer: fine) {
+    .auth-art__stage:hover {
+      --auth-lift: 0.5;
+    }
+    .auth-art__stage:hover .auth-art__pose {
+      transform: translate(var(--auth-px, 0px), var(--auth-py, 0px))
+        rotate(var(--auth-prot, 0deg)) scale(var(--auth-pscale, 1));
+    }
+    .auth-art__stage:hover .auth-art__mark--line {
+      stroke-width: calc(var(--auth-w, 0.4) * 1.7);
+      stroke-opacity: 0.78;
+    }
+    .auth-art__stage:hover .auth-art__mark--accent {
+      transform: scale(1.35);
+    }
+  }
+
+  /* ---- Interaction: typing ----
+
+     Each keystroke fires the scene's own answer from the component (Web
+     Animations on `rotate`, `scale` and `translate`, never on the `transform`
+     the loops below own). On top of that, the whole composition inhales while
+     someone types. Its own group, outside
+     the sway: sway ANIMATES `transform` and this TRANSITIONS it, and an
+     animation on the same property wins. Scale only ever grows, so no spanning
+     mark's overhang can be pulled inside the frame. */
+  .auth-art__breathe {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    transform: scale(calc(1 + var(--auth-energy, 0) * 0.035));
+    transition: transform var(--tds-dur-slow, 600ms) var(--tds-ease-out, ease-out);
+  }
+}
+@keyframes auth-art-in {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* `scale` and `opacity`, never `transform`: the pose group around this one
+   transitions `transform`, the motion group inside animates it. */
+@keyframes auth-art-pop {
+  from {
+    opacity: 0;
+    scale: 0.55;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes auth-art-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes auth-art-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Every frame lists the SAME transform functions in the SAME order — a differing
+   list forces matrix decomposition instead of component-wise interpolation.
+   Every fallback is the identity value on purpose: a mistyped custom property
+   makes the whole declaration invalid at computed-value time, which computes to
+   `none` with nothing logged. static-posture.test.ts cross-checks the names
+   against LoginArtwork.tsx in both directions. */
+@keyframes auth-art-drift {
+  0%,
+  100% {
+    transform: translate(0px, 0px) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate(var(--auth-dx, 0px), var(--auth-dy, 0px))
+      rotate(var(--auth-rot, 0deg)) scale(var(--auth-scale, 1));
+  }
+}
+@keyframes auth-art-orbit {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(var(--auth-rot, 0deg));
+  }
+}
+/* Rest, turn, rest, turn back: a tile holds still for most of its cycle, so the
+   mosaic reads as a floor that now and then rearranges one piece. */
+@keyframes auth-art-turn {
+  0%,
+  38%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50%,
+  88% {
+    transform: rotate(var(--auth-rot, 0deg));
+  }
+}
+@keyframes auth-art-slide {
+  0%,
+  100% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(var(--auth-dx, 0px), var(--auth-dy, 0px));
+  }
+}
+/* A MULTIPLIER on the group, resting at exactly 1. The mark's own alpha lives
+   on the drawn node as `stroke-opacity`/`fill-opacity`, so this loop composes
+   with it — and under `reduce`, where no keyframe applies, the group is simply
+   transparent and the node's own value is the whole rendering. */
+@keyframes auth-art-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: var(--auth-o-low, 1);
+  }
+}
+/* Invisible at both ends (the static composition shows no signal), visible
+   only while the dash is on the run. */
+@keyframes auth-art-signal {
+  0% {
+    stroke-dashoffset: 0.07;
+    opacity: 0;
+  }
+  4%,
+  52% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    stroke-dashoffset: -1;
+    opacity: 0;
+  }
+}
+/* A few degrees of travel per round trip, resting at 0 at both ends so the
+   loop's seam is the static composition. */
+@keyframes auth-art-sway {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(var(--auth-sway, 2deg));
+  }
+  75% {
+    transform: rotate(calc(-1 * var(--auth-sway, 2deg)));
+  }
+}

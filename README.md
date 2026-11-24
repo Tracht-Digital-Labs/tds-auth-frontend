@@ -70,8 +70,9 @@ src/
   lib/redirect.test.ts
   lib/site.ts / site.test.ts
   test-support/location.ts       # controllable window.location for the island tests
-  styles/global.css              # tds-shared-pkg base+app + local login chrome
+  styles/global.css              # tds-shared-pkg base+app, then the login chrome in styles/global/
 tests/static-posture.test.ts     # noindex / Tailwind / Fontsource / cssTarget guards
+tests/stylesheets.test.ts        # global.css imports every partial exactly once
 Dockerfile.test                  # the CI gate on Linux/Node 22  (npm run test:docker)
 scripts/docker-test.mjs
 public/robots.txt                # Disallow: /
