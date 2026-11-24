@@ -13,6 +13,7 @@ rendering stays on `npm run type-check`.
 | `src/lib/artworkSignal.test.ts` | Delivery, unsubscribe, **no payload**, no-op without `window` |
 | `src/components/LoginArtwork.test.tsx` | Client-side generation with seed and scene in the markup; pose → entrance → motion nesting; stage resolves under `data-theme="dark"`; hard shadow offset outside its motion group, face raised; alpha as presentation attribute; reduced motion gates the imperative half; typing energy rises and decays; a keystroke animates only marks of the composition, different ones on consecutive keys; **a pointer moving over the stage writes nothing** |
 | `tests/static-posture.test.ts` | Silent traps: noindex + `Disallow: /` + no sitemap, `@tailwindcss/postcss`, fonts as JS imports, `tdsViteBuild`; artwork reduced-motion gate, `--auth-*` names in sync both ways, user-space filter region, tilt nesting, no blend mode, static shadow offset + `translate` lift, no pointer reads, hover media query, pose as transition, overridable alpha; form-first DOM order |
+| `tests/stylesheets.test.ts` | `global.css` imports every partial under `styles/global/` exactly once and holds no rules of its own |
 
 `static-posture.test.ts` asserts against **comment-stripped** sources, because the configs document
 these traps in prose. Its `ruleBody()` helper extracts a rule from comment-stripped CSS; several

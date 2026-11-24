@@ -1,0 +1,20 @@
+/* Wide: form left, artwork right, both full height. */
+@media (min-width: 62rem) {
+  .auth-page {
+    grid-template-rows: 1fr;
+    grid-template-columns: minmax(26rem, 42%) 1fr;
+  }
+  .auth-panel {
+    grid-row: 1;
+    grid-column: 1;
+    padding: 3rem;
+    /* `.tds-wash` isolates the panel, and the artwork comes later in the DOM,
+       so without a z-index it paints over a field's error tip that reaches
+       across into it. */
+    z-index: 1;
+  }
+  .auth-art {
+    grid-row: 1;
+    grid-column: 2;
+  }
+}

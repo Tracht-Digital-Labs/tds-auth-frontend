@@ -1,6 +1,6 @@
 # Login UI
 
-## Split shell (`global.css`)
+## Split shell (`global/shell.css`, `global/split.css`)
 
 The form sits left and a generated composition right (≥ 62rem). Below that, the artwork becomes a
 slim band above the form.

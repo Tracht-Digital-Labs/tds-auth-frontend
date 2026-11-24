@@ -1,7 +1,7 @@
 # Generated login artwork
 
 `src/lib/artwork.ts` (generator) + `src/components/LoginArtwork.tsx` (renderer) + the
-`.auth-art*` rules in `global.css`.
+`.auth-art*` rules in `src/styles/global/artwork.css` and `artwork-motion.css`.
 
 `artwork.ts` holds `generateArtwork` and is the only import path; its parts live under
 `src/lib/artwork/`:

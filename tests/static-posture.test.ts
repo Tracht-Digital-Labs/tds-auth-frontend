@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { readStylesheet } from "./stylesheet";
 
 /**
  * Guards for the repo's structural posture — the AGENTS.md traps that fail
@@ -35,7 +36,7 @@ const astroConfig = read("astro.config.mjs");
 const astroConfigCode = code(astroConfig);
 const postcssConfig = read("postcss.config.mjs");
 const layout = read("src/layouts/Layout.astro");
-const globalCss = read("src/styles/global.css");
+const globalCss = readStylesheet("global");
 const artwork = read("src/components/LoginArtwork.tsx");
 
 /**
