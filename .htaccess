@@ -1,0 +1,6 @@
+# UTF-8 in the HTTP header (quality standard, 2026-11-15). The pages carry
+# <meta charset>, but Apache sends text/html without a charset otherwise.
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+  AddCharset UTF-8 .html .css .js .mjs .json .xml .txt .svg .webmanifest
+</IfModule>
